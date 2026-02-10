@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ramadan Kitchen</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Patrick+Hand&family=Inter:wght@400;600&family=Amiri:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@700&family=Cinzel+Decorative:wght@700&family=Patrick+Hand&family=Inter:wght@400;600&family=Amiri:wght@700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
+    <div class="hanging-poster">
+      <div class="pin"></div>
+      <h1>Ramadan Mubarak</h1>
+      <p>May your days be filled with peace</p>
+    </div>
+
     <div class="wall-display">
       <div class="date-row">
-        <div class="arabic-date" id="hijri-date">Loading Hijri...</div>
-        <div class="english-date" id="english-date">Loading Date...</div>
+        <span id="hijri-date">Loading Hijri...</span> •
+        <span id="english-date">Loading...</span>
       </div>
-
       <div class="prayer-row">
         <div class="time-card">
           <span class="label">Sehri Ends</span>
@@ -28,11 +33,11 @@
           <span class="time" id="iftar-time">--:--</span>
         </div>
       </div>
-      <div class="location-label">📍 Based on Mecca (Standard)</div>
+      <div class="location-label">📍 Based on Mecca</div>
     </div>
 
     <button class="start-btn" id="start-btn" onclick="openKitchen()">
-      ✨ Prepare Iftar ✨
+      ✨ Open Kitchen ✨
     </button>
 
     <div class="counter-top" id="scene">
@@ -48,7 +53,7 @@
                     text-shadow: 2px 2px 0px #3e2723;
                   "
                 >
-                  Ramadan<br />Secrets
+                  Ramadan<br />Recipes
                 </h1>
                 <p style="margin: 5px 0; color: #e3b584">Tap button to open</p>
               </div>
@@ -69,7 +74,6 @@
               </div>
             </div>
           </div>
-
           <div class="pages-right">
             <h2 class="recipe-title" id="r-title">...</h2>
             <p class="recipe-meta" id="r-meta">...</p>
@@ -89,7 +93,6 @@
             allow="autoplay; encrypted-media"
             allowfullscreen
           ></iframe>
-
           <div id="video-error" class="fallback-msg">
             <p>Video embedding disabled by owner.</p>
             <a id="yt-link" href="#" target="_blank" class="yt-btn"
@@ -102,63 +105,40 @@
     </div>
 
     <script>
-      // --- 1. INITIALIZE DATA (Date & Prayer Times) ---
       window.onload = function () {
         fetchRamadanData();
       };
-
       async function fetchRamadanData() {
-        // Using Aladhan API for accurate Hijri Date & Prayer Times
-        // NOTE: You can change 'city=Mecca' and 'country=SA' to your specific location
+        // Change city/country here if needed
         const apiURL =
           "https://api.aladhan.com/v1/timingsByCity?city=Mecca&country=Saudi%20Arabia&method=4";
-
         try {
           const res = await fetch(apiURL);
           const data = await res.json();
           const timings = data.data.timings;
           const date = data.data.date;
-
-          // 1. Set Dates
           document.getElementById("english-date").innerText = date.readable;
           document.getElementById("hijri-date").innerText =
             `${date.hijri.day} ${date.hijri.month.en} ${date.hijri.year}`;
-
-          // 2. Set Times (Fajr = Sehri End, Maghrib = Iftar)
-          document.getElementById("sehri-time").innerText = formatTime(
-            timings.Fajr,
-          );
-          document.getElementById("iftar-time").innerText = formatTime(
-            timings.Maghrib,
-          );
+          document.getElementById("sehri-time").innerText =
+            timings.Fajr.split(" ")[0];
+          document.getElementById("iftar-time").innerText =
+            timings.Maghrib.split(" ")[0];
         } catch (e) {
-          console.error("Error fetching times:", e);
-          document.getElementById("hijri-date").innerText = "Ramadan Mubarak";
+          console.error(e);
         }
       }
-
-      // Helper to clean up time string (remove timezone info if present)
-      function formatTime(timeStr) {
-        return timeStr.split(" ")[0]; // Returns "04:30" from "04:30 (+03)"
-      }
-
-      // --- 2. EXISTING ANIMATION LOGIC ---
       async function openKitchen() {
         const btn = document.getElementById("start-btn");
         btn.style.opacity = "0";
         setTimeout(() => (btn.style.display = "none"), 400);
-
         await fetchRecipe();
-
         const scene = document.getElementById("scene");
         scene.style.transform = "translateY(0)";
-
         setTimeout(() => {
           document.getElementById("the-book").classList.add("open");
         }, 1000);
       }
-
-      // --- 3. EXISTING RECIPE FETCH LOGIC ---
       async function fetchRecipe() {
         try {
           const res = await fetch(
@@ -166,32 +146,25 @@
           );
           const data = await res.json();
           const meal = data.meals[0];
-
           document.getElementById("r-title").innerText = meal.strMeal;
           document.getElementById("r-meta").innerText =
             `${meal.strArea} Cuisine • ${meal.strCategory}`;
           document.getElementById("r-desc").innerText = meal.strInstructions;
-
           const videoError = document.getElementById("video-error");
           const iframe = document.getElementById("ipad-video");
-
           if (meal.strYoutube) {
             const videoId = meal.strYoutube.split("v=")[1];
-            // Added enablejsapi=1 for better control
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1`;
-            iframe.src = embedUrl;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1`;
             iframe.style.display = "block";
             videoError.style.display = "none";
             document.getElementById("yt-link").href = meal.strYoutube;
           } else {
             iframe.style.display = "none";
             videoError.style.display = "flex";
-            videoError.querySelector("p").innerText =
-              "No video available for this recipe.";
+            videoError.querySelector("p").innerText = "No video available.";
           }
         } catch (e) {
-          console.error(e);
-          alert("Network Error. Try refreshing!");
+          alert("Network Error");
         }
       }
     </script>

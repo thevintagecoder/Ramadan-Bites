@@ -125,11 +125,11 @@ body::after {
   margin: 0 20px;
 }
 
-/* --- THE KITCHEN COUNTER (CENTERED) --- */
+/* --- THE KITCHEN COUNTER (SHIFTED RIGHT) --- */
 .counter-top {
   display: flex;
   flex-direction: row;
-  align-items: flex-end; /* Align stands to base */
+  align-items: flex-end;
   justify-content: center;
   gap: 60px;
   width: 95%;
@@ -137,12 +137,13 @@ body::after {
   position: fixed;
   left: 50%;
   top: 55%;
-  transform: translate(-50%, 120vh) scale(0.9);
+  /* Set default X to -35% instead of -50% to stay on the right side */
+  transform: translate(-35%, 120vh) scale(0.9);
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   z-index: 10;
 }
 
-/* --- RESTORED 3D BOOK --- */
+/* --- 3D BOOK --- */
 .book-stand {
   width: 400px;
   height: 480px;
@@ -272,7 +273,7 @@ body::after {
   font-size: 1.1rem;
 }
 
-/* --- RESTORED IPAD --- */
+/* --- IPAD --- */
 .ipad-stand {
   width: 440px;
   height: 320px;
@@ -291,7 +292,6 @@ body::after {
 .ipad-stand:hover {
   transform: rotateY(-5deg) scale(1.02);
 }
-
 .ipad-screen {
   width: 100%;
   height: 100%;
@@ -300,13 +300,11 @@ body::after {
   overflow: hidden;
   position: relative;
 }
-
 iframe {
   width: 100%;
   height: 100%;
   border: none;
 }
-
 .fallback-msg {
   display: none;
   width: 100%;
@@ -333,6 +331,49 @@ iframe {
   border-radius: 2px;
   align-self: center;
   margin-top: 6px;
+}
+
+/* --- FOOTER & REFRESH --- */
+.footer-area {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Shown after Open Kitchen */
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+
+.refresh-btn {
+  background: #d4a373;
+  color: #3e2723;
+  border: none;
+  padding: 10px 25px;
+  font-family: "Cinzel Decorative";
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
+
+.refresh-btn:hover {
+  background: #e3b584;
+  transform: translateY(-2px);
+}
+
+.credits {
+  color: white;
+  font-family: "Patrick Hand";
+  font-size: 1rem;
+}
+
+.credits a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* --- START BUTTON --- */

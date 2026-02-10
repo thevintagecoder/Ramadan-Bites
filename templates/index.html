@@ -33,11 +33,11 @@
           <span class="time" id="iftar-time">--:--</span>
         </div>
       </div>
-      <div class="location-label">📍 Based on Mecca</div>
+      <div class="location-label"></div>
     </div>
 
     <button class="start-btn" id="start-btn" onclick="openKitchen()">
-      ✨ Open Kitchen ✨
+      ✨ Click To Find A Recipe! ✨
     </button>
 
     <div class="counter-top" id="scene">
@@ -63,7 +63,7 @@
             <div class="recipe-text" id="r-desc">
               Summoning deliciousness...
             </div>
-            <p class="bismillah">~ Bismillah ~</p>
+            <p class="bismillah">~ BISMILLAH ~</p>
           </div>
         </div>
       </div>
@@ -84,6 +84,18 @@
           </div>
         </div>
         <div class="ipad-home-bar"></div>
+      </div>
+    </div>
+
+    <div class="footer-area" id="footer-area">
+      <button class="refresh-btn" onclick="fetchRecipe()">
+        Show me another recipe
+      </button>
+      <div class="credits">
+        Created by
+        <a href="https://github.com/nafisamehzabin" target="_blank"
+          >Nafisa Mehzabin</a
+        >
       </div>
     </div>
 
@@ -118,7 +130,12 @@
         setTimeout(() => (btn.style.display = "none"), 400);
         await fetchRecipe();
         const scene = document.getElementById("scene");
-        scene.style.transform = "translate(-50%, -45%) scale(1)";
+        // Changed translate X to -35% to move it to the right
+        scene.style.transform = "translate(-35%, -45%) scale(1)";
+
+        // Show the footer
+        document.getElementById("footer-area").style.display = "flex";
+
         setTimeout(() => {
           document.getElementById("the-book").classList.add("open");
         }, 1000);

@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
+    <audio id="bg-music" loop>
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <div class="music-toggle" id="music-toggle" onclick="toggleMusic()">
+      <span id="music-icon">🔇</span>
+    </div>
+
     <div class="hanging-poster">
       <div class="pin"></div>
       <h1>Ramadan Mubarak</h1>
@@ -37,7 +48,7 @@
     </div>
 
     <button class="start-btn" id="start-btn" onclick="openKitchen()">
-      ✨ Click To Find A Recipe! ✨
+      ✨ Find Me A Recipe For Iftar ✨
     </button>
 
     <div class="counter-top" id="scene">
@@ -104,6 +115,21 @@
         fetchRamadanData();
       };
 
+      let isPlaying = false;
+      const music = document.getElementById("bg-music");
+      const musicBtn = document.getElementById("music-icon");
+
+      function toggleMusic() {
+        if (isPlaying) {
+          music.pause();
+          musicBtn.innerText = "🔇";
+        } else {
+          music.play();
+          musicBtn.innerText = "🔊";
+        }
+        isPlaying = !isPlaying;
+      }
+
       async function fetchRamadanData() {
         const apiURL =
           "https://api.aladhan.com/v1/timingsByCity?city=Mecca&country=Saudi%20Arabia&method=4";
@@ -128,13 +154,14 @@
         const btn = document.getElementById("start-btn");
         btn.style.opacity = "0";
         setTimeout(() => (btn.style.display = "none"), 400);
+
         await fetchRecipe();
+
         const scene = document.getElementById("scene");
-        // Changed translate X to -35% to move it to the right
         scene.style.transform = "translate(-35%, -45%) scale(1)";
 
-        // Show the footer
         document.getElementById("footer-area").style.display = "flex";
+        document.getElementById("music-toggle").style.display = "flex";
 
         setTimeout(() => {
           document.getElementById("the-book").classList.add("open");

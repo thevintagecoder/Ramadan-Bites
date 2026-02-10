@@ -8,7 +8,7 @@ body {
   flex-direction: column;
   align-items: center;
   background: #1a1a2e
-    url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2070&auto=format&fit=crop")
+    url("https://generated-images.googleusercontent.com/content/0/image_generation_content/0")
     center/cover fixed no-repeat;
   font-family: "Inter", sans-serif;
   perspective: 1500px;
@@ -29,6 +29,30 @@ body::after {
   z-index: -1;
 }
 
+/* --- MUSIC TOGGLE --- */
+.music-toggle {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: rgba(212, 163, 115, 0.8);
+  border: 2px solid white;
+  border-radius: 50%;
+  display: none; /* Shown after open kitchen */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  font-size: 1.5rem;
+  transition: 0.3s;
+}
+.music-toggle:hover {
+  transform: scale(1.1);
+  background: #e3b584;
+}
+
 /* --- HEADER UI --- */
 .hanging-poster {
   position: absolute;
@@ -42,7 +66,6 @@ body::after {
   transform: rotate(-1.5deg);
   animation: gentleSwing 4s ease-in-out infinite alternate;
 }
-
 .pin {
   width: 14px;
   height: 14px;
@@ -53,7 +76,6 @@ body::after {
   left: 50%;
   transform: translateX(-50%);
 }
-
 .hanging-poster h1 {
   font-family: "Reem Kufi";
   color: #4e342e;
@@ -85,7 +107,6 @@ body::after {
   z-index: 50;
   color: white;
 }
-
 .date-row {
   font-family: "Amiri";
   font-size: 1.3rem;
@@ -125,7 +146,7 @@ body::after {
   margin: 0 20px;
 }
 
-/* --- THE KITCHEN COUNTER (SHIFTED RIGHT) --- */
+/* --- COUNTER-TOP (SHIFTED RIGHT) --- */
 .counter-top {
   display: flex;
   flex-direction: row;
@@ -137,7 +158,6 @@ body::after {
   position: fixed;
   left: 50%;
   top: 55%;
-  /* Set default X to -35% instead of -50% to stay on the right side */
   transform: translate(-35%, 120vh) scale(0.9);
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   z-index: 10;
@@ -149,7 +169,6 @@ body::after {
   height: 480px;
   perspective: 2000px;
 }
-
 .book {
   width: 100%;
   height: 100%;
@@ -157,7 +176,6 @@ body::after {
   transform-style: preserve-3d;
   transition: transform 1s;
 }
-
 .cover-flap {
   position: absolute;
   width: 100%;
@@ -167,11 +185,9 @@ body::after {
   transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
   z-index: 10;
 }
-
 .book.open .cover-flap {
   transform: rotateY(-175deg);
 }
-
 .cover-front {
   position: absolute;
   width: 100%;
@@ -188,7 +204,6 @@ body::after {
   color: gold;
   box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.4);
 }
-
 .cover-content h1 {
   font-family: "Cinzel Decorative";
   font-size: 2.5rem;
@@ -201,7 +216,6 @@ body::after {
   color: #e3b584;
   text-align: center;
 }
-
 .cover-back {
   position: absolute;
   width: 100%;
@@ -213,21 +227,7 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.1);
 }
-
-.notes-page {
-  text-align: center;
-  opacity: 0.6;
-}
-.notes-page h3 {
-  font-family: "Cinzel Decorative";
-  color: #5d4037;
-}
-.notes-page p {
-  font-family: "Patrick Hand";
-}
-
 .pages-right {
   position: absolute;
   width: 100%;
@@ -240,7 +240,6 @@ body::after {
   display: flex;
   flex-direction: column;
 }
-
 .recipe-title {
   font-family: "Cinzel Decorative";
   color: #5d4037;
@@ -288,7 +287,6 @@ body::after {
   transform: rotateY(-15deg);
   transition: transform 0.4s;
 }
-
 .ipad-stand:hover {
   transform: rotateY(-5deg) scale(1.02);
 }
@@ -324,14 +322,6 @@ iframe {
   border-radius: 5px;
   font-weight: bold;
 }
-.ipad-home-bar {
-  width: 80px;
-  height: 4px;
-  background: #555;
-  border-radius: 2px;
-  align-self: center;
-  margin-top: 6px;
-}
 
 /* --- FOOTER & REFRESH --- */
 .footer-area {
@@ -339,13 +329,12 @@ iframe {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  display: none; /* Shown after Open Kitchen */
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   z-index: 100;
 }
-
 .refresh-btn {
   background: #d4a373;
   color: #3e2723;
@@ -358,18 +347,15 @@ iframe {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
 }
-
 .refresh-btn:hover {
   background: #e3b584;
   transform: translateY(-2px);
 }
-
 .credits {
   color: white;
   font-family: "Patrick Hand";
   font-size: 1rem;
 }
-
 .credits a {
   color: #ffd700;
   text-decoration: none;
@@ -391,8 +377,4 @@ iframe {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   z-index: 100;
   transition: 0.3s;
-}
-.start-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #e3b584, #a0522d);
 }

@@ -45,32 +45,15 @@
         <div class="book" id="the-book">
           <div class="cover-flap">
             <div class="cover-front">
-              <div>
-                <h1
-                  style="
-                    font-size: 2.8rem;
-                    margin: 0;
-                    text-shadow: 2px 2px 0px #3e2723;
-                  "
-                >
-                  Ramadan<br />Recipes
-                </h1>
-                <p style="margin: 5px 0; color: #e3b584">Tap button to open</p>
+              <div class="cover-content">
+                <h1>Ramadan<br />Recipes</h1>
+                <p>Tap button to open</p>
               </div>
             </div>
             <div class="cover-back">
-              <div style="text-align: center; opacity: 0.6">
-                <h3
-                  style="
-                    font-family: &quot;Cinzel Decorative&quot;;
-                    color: #5d4037;
-                  "
-                >
-                  Notes
-                </h3>
-                <p style="font-family: &quot;Patrick Hand&quot;">
-                  Made with love.
-                </p>
+              <div class="notes-page">
+                <h3>Notes</h3>
+                <p>Made with love.</p>
               </div>
             </div>
           </div>
@@ -108,8 +91,8 @@
       window.onload = function () {
         fetchRamadanData();
       };
+
       async function fetchRamadanData() {
-        // Change city/country here if needed
         const apiURL =
           "https://api.aladhan.com/v1/timingsByCity?city=Mecca&country=Saudi%20Arabia&method=4";
         try {
@@ -128,17 +111,19 @@
           console.error(e);
         }
       }
+
       async function openKitchen() {
         const btn = document.getElementById("start-btn");
         btn.style.opacity = "0";
         setTimeout(() => (btn.style.display = "none"), 400);
         await fetchRecipe();
         const scene = document.getElementById("scene");
-        scene.style.transform = "translateY(0)";
+        scene.style.transform = "translate(-50%, -45%) scale(1)";
         setTimeout(() => {
           document.getElementById("the-book").classList.add("open");
         }, 1000);
       }
+
       async function fetchRecipe() {
         try {
           const res = await fetch(
@@ -150,6 +135,7 @@
           document.getElementById("r-meta").innerText =
             `${meal.strArea} Cuisine • ${meal.strCategory}`;
           document.getElementById("r-desc").innerText = meal.strInstructions;
+
           const videoError = document.getElementById("video-error");
           const iframe = document.getElementById("ipad-video");
           if (meal.strYoutube) {

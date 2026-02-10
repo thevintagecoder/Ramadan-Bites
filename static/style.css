@@ -1,4 +1,4 @@
-/* --- GLOBAL SETTINGS --- */
+/* --- GLOBAL --- */
 body {
   margin: 0;
   overflow: hidden;
@@ -7,24 +7,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* 1. FALLBACK COLOR (Deep Midnight Blue) */
-  background-color: #1a1a2e;
-
-  /* 2. IMAGE (Ramadan Lanterns) */
-  background-image: url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2070&auto=format&fit=crop");
-
-  /* 3. SETTINGS */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-
+  background: #1a1a2e
+    url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2070&auto=format&fit=crop")
+    center/cover fixed no-repeat;
   font-family: "Inter", sans-serif;
   perspective: 1500px;
 }
 
-/* Dark overlay to ensure text is readable */
 body::after {
   content: "";
   position: absolute;
@@ -32,32 +21,25 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Darkens the image slightly so white text pops */
   background: radial-gradient(
     circle,
-    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.2) 0%,
     rgba(0, 0, 0, 0.7) 90%
   );
   z-index: -1;
-  pointer-events: none;
 }
 
-/* --- HANDMADE POSTER --- */
+/* --- HEADER UI --- */
 .hanging-poster {
   position: absolute;
-  top: 30px;
+  top: 20px;
   z-index: 60;
-
-  background-color: #f3e5ab;
-  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-
-  padding: 15px 50px;
+  background: #f3e5ab
+    url("https://www.transparenttextures.com/patterns/cream-paper.png");
+  padding: 10px 40px;
   text-align: center;
-  border-radius: 2px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-
-  transform: rotate(-2deg);
-  transform-origin: top center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transform: rotate(-1.5deg);
   animation: gentleSwing 4s ease-in-out infinite alternate;
 }
 
@@ -70,149 +52,100 @@ body::after {
   top: -7px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .hanging-poster h1 {
-  font-family: "Reem Kufi", sans-serif;
+  font-family: "Reem Kufi";
   color: #4e342e;
   margin: 0;
-  font-size: 2.5rem;
-  line-height: 1;
-  text-transform: uppercase;
+  font-size: 2.2rem;
 }
-
 .hanging-poster p {
-  font-family: "Patrick Hand", cursive;
+  font-family: "Patrick Hand";
   color: #795548;
-  margin: 8px 0 0 0;
-  font-size: 1.2rem;
+  margin: 5px 0 0 0;
 }
 
 @keyframes gentleSwing {
   0% {
-    transform: rotate(-2.5deg);
+    transform: rotate(-2deg);
   }
   100% {
-    transform: rotate(-1.5deg);
+    transform: rotate(-1deg);
   }
 }
 
-/* --- WALL DISPLAY (Date & Time) --- */
 .wall-display {
   position: absolute;
-  top: 170px; /* Pushed down */
+  top: 135px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   z-index: 50;
-  color: #fff;
-  width: 100%;
+  color: white;
 }
 
 .date-row {
-  font-family: "Amiri", serif;
-  font-size: 1.4rem;
+  font-family: "Amiri";
+  font-size: 1.3rem;
   color: #ffd700;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   padding: 5px 20px;
   border-radius: 30px;
 }
-
 .prayer-row {
   display: flex;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  padding: 15px 40px;
+  padding: 12px 30px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  align-items: center;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .time-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 100px;
+  min-width: 90px;
 }
-
 .time-card .label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
+  font-size: 0.7rem;
   color: #ccc;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
 }
-
 .time-card .time {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #fff;
-  font-family: "Inter", sans-serif;
 }
-
 .divider {
   width: 1px;
-  height: 40px;
+  height: 35px;
   background: rgba(255, 255, 255, 0.2);
-  margin: 0 30px;
+  margin: 0 20px;
 }
 
-.location-label {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 5px;
-}
-
-/* --- SCENE CONTAINER (The Counter) --- */
+/* --- THE KITCHEN COUNTER (CENTERED) --- */
 .counter-top {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end; /* Align stands to base */
   justify-content: center;
   gap: 60px;
-  width: 90%;
-  max-width: 1200px;
-  height: 600px;
-  transform: translateY(120vh);
+  width: 95%;
+  max-width: 1100px;
+  position: fixed;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, 120vh) scale(0.9);
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-  position: relative;
   z-index: 10;
-
-  /* Positioned well below the text */
-  margin-top: 220px;
 }
 
-/* --- START BUTTON --- */
-.start-btn {
-  position: absolute;
-  top: 60%;
-  z-index: 100;
-  background: linear-gradient(135deg, #d4a373, #8b4513);
-  color: #fff;
-  border: 2px solid #fdf6e3;
-  padding: 20px 50px;
-  font-size: 1.8rem;
-  font-family: "Cinzel Decorative", cursive;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  transition: all 0.4s ease;
-}
-.start-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #e3b584, #a0522d);
-}
-
-/* --- BOOK STAND --- */
+/* --- RESTORED 3D BOOK --- */
 .book-stand {
-  width: 420px;
-  height: 520px;
-  position: relative;
+  width: 400px;
+  height: 480px;
   perspective: 2000px;
 }
 
@@ -226,8 +159,6 @@ body::after {
 
 .cover-flap {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   transform-origin: left;
@@ -237,54 +168,71 @@ body::after {
 }
 
 .book.open .cover-flap {
-  transform: rotateY(-180deg);
+  transform: rotateY(-175deg);
 }
 
 .cover-front {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background: #5d4037
     url("https://www.transparenttextures.com/patterns/leather.png");
   border-radius: 0 15px 15px 0;
+  backface-visibility: hidden;
+  border: 4px solid #3e2723;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  backface-visibility: hidden;
-  border: 5px solid #3e2723;
-  box-sizing: border-box;
-  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.4);
   color: gold;
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.cover-content h1 {
+  font-family: "Cinzel Decorative";
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 0 #3e2723;
+}
+.cover-content p {
+  font-family: "Inter";
+  color: #e3b584;
   text-align: center;
 }
 
 .cover-back {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background: #fdf6e3;
   border-radius: 15px 0 0 15px;
   transform: rotateY(180deg);
   backface-visibility: hidden;
-  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.notes-page {
+  text-align: center;
+  opacity: 0.6;
+}
+.notes-page h3 {
+  font-family: "Cinzel Decorative";
+  color: #5d4037;
+}
+.notes-page p {
+  font-family: "Patrick Hand";
 }
 
 .pages-right {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(to right, #e0cda5, #fdf6e3 15%);
   border-radius: 0 15px 15px 0;
-  z-index: 1;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
   padding: 30px;
   box-sizing: border-box;
@@ -292,63 +240,63 @@ body::after {
   flex-direction: column;
 }
 
-/* Typography */
 .recipe-title {
   font-family: "Cinzel Decorative";
   color: #5d4037;
-  font-size: 1.8rem;
-  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  margin: 0;
   border-bottom: 2px solid #d4a373;
+  padding-bottom: 5px;
 }
 .recipe-meta {
-  font-family: "Inter", sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #888;
   font-weight: bold;
   text-transform: uppercase;
-  margin-bottom: 15px;
+  margin: 10px 0;
 }
 .recipe-text {
-  font-family: "Patrick Hand", cursive;
-  font-size: 1.2rem;
+  font-family: "Patrick Hand";
+  font-size: 1.1rem;
   line-height: 1.4;
   color: #2d2d2d;
   overflow-y: auto;
-  height: 320px;
+  flex-grow: 1;
+  margin-bottom: 10px;
 }
 .bismillah {
-  text-align: center;
-  margin-top: auto;
   font-family: "Cinzel Decorative";
   color: #5d4037;
-  font-size: 1.2rem;
+  text-align: center;
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-/* --- IPAD STAND --- */
+/* --- RESTORED IPAD --- */
 .ipad-stand {
-  width: 480px;
-  height: 360px;
+  width: 440px;
+  height: 320px;
   background: #222;
-  border-radius: 24px;
-  padding: 12px;
+  border-radius: 20px;
+  padding: 10px;
   box-shadow:
     0 0 0 1px #444,
     0 20px 50px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  transform: rotateY(-10deg);
-  transition: transform 0.3s;
+  transform: rotateY(-15deg);
+  transition: transform 0.4s;
 }
 
 .ipad-stand:hover {
-  transform: rotateY(0deg) scale(1.02);
+  transform: rotateY(-5deg) scale(1.02);
 }
 
 .ipad-screen {
   width: 100%;
   height: 100%;
   background: #000;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
 }
@@ -368,24 +316,42 @@ iframe {
   justify-content: center;
   color: #888;
   text-align: center;
-  font-family: "Inter", sans-serif;
 }
-
 .yt-btn {
-  margin-top: 15px;
+  margin-top: 10px;
   background: #c4302b;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 5px;
   font-weight: bold;
 }
-
 .ipad-home-bar {
-  width: 100px;
+  width: 80px;
   height: 4px;
   background: #555;
   border-radius: 2px;
   align-self: center;
-  margin-top: 8px;
+  margin-top: 6px;
+}
+
+/* --- START BUTTON --- */
+.start-btn {
+  position: absolute;
+  top: 65%;
+  background: linear-gradient(135deg, #d4a373, #8b4513);
+  color: white;
+  border: 2px solid white;
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  font-family: "Cinzel Decorative";
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transition: 0.3s;
+}
+.start-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #e3b584, #a0522d);
 }

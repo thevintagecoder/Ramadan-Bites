@@ -5,8 +5,8 @@ An interactive, aesthetically pleasing web experience designed to bring the spir
 ## ✨ Features
 
 - **Atmospheric UI:** A Studio Ghibli-inspired Iftar background with calming ambient music (toggleable).
-- **Ramadan Dashboard:** Displays current Hijri date, English date, and Sehri/Iftar timings (currently set to Mecca).
-- **Interactive 3D Scene:** Click "Open Kitchen" to trigger a smooth 3D animation revealing a recipe book and a virtual iPad.
+- **Ramadan Dashboard:** Displays current Hijri date, English date, and Sehri/Iftar timings.
+- **Interactive 3D Scene:** Click "Give Me A Recipe" to trigger a smooth 3D animation revealing a recipe book and a virtual iPad.
 - **Recipe Generator:** Fetches random **Indian/Bengali recipes** perfect for Iftar.
 - **Video Tutorials:** Automatically embeds a YouTube cooking video for the suggested recipe on the virtual iPad.
 - **Refresh Option:** Don't like the suggestion? Click "Show me another recipe" to get a new one instantly.

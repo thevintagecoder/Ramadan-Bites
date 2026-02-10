@@ -3,32 +3,182 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ramadan Recipes</title>
+    <title>Ramadan Live</title>
     <link rel="stylesheet" href="/static/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Playfair+Display:wght@600&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div class="container">
-      <header>
-        <h1>🌙 Iftar Inspirations</h1>
-        <p>Day {{ recipe.day }} of Ramadan</p>
-      </header>
+      <div class="glass-card">
+        <h1 class="arabic-date" id="hijri-date">Loading...</h1>
+        <p class="english-date" id="gregorian-date">...</p>
 
-      <main class="card">
-        <h2>{{ recipe.name }}</h2>
-        <div class="meta">
-          <span>⏱️ {{ recipe.time }}</span>
+        <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 20px 0" />
+
+        <div id="prayer-info">
+          <p
+            style="
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              font-size: 0.8rem;
+            "
+          >
+            Next Prayer
+          </p>
+          <div class="timer-box">
+            <h2 id="time-remaining">--:--:--</h2>
+            <p id="next-prayer-name">Loading...</p>
+          </div>
         </div>
-        <p class="description">{{ recipe.desc }}</p>
-        <button class="btn">View Full Recipe</button>
-      </main>
 
-      <footer>
-        <p>Made with ❤️ for Ramadan</p>
-      </footer>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+          "
+        >
+          <div>
+            <span>🌅 Sehri:</span> <strong id="sehri-time">--:--</strong>
+          </div>
+          <div>
+            <span>🌇 Iftar:</span> <strong id="iftar-time">--:--</strong>
+          </div>
+        </div>
+
+        <button class="btn" onclick="openRecipeModal()">
+          ✨ Get Iftar Idea
+        </button>
+      </div>
     </div>
+
+    <div id="recipe-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeRecipeModal()">&times;</span>
+        <img id="modal-img" class="modal-img" src="" alt="Food" />
+        <h2 id="modal-title">Searching...</h2>
+        <p id="modal-cat" style="color: #666; font-size: 0.9rem"></p>
+        <p
+          id="modal-area"
+          style="color: #888; font-size: 0.8rem; margin-bottom: 10px"
+        ></p>
+        <a
+          id="modal-link"
+          href="#"
+          target="_blank"
+          style="color: #d4a373; text-decoration: none; font-weight: bold"
+          >View Full Recipe →</a
+        >
+      </div>
+    </div>
+
+    <script>
+      // --- CONFIGURATION ---
+      const CITY = "Dhaka";
+      const COUNTRY = "Bangladesh";
+
+      // --- 1. DYNAMIC BACKGROUNDS ---
+      const backgrounds = [
+        "https://images.unsplash.com/photo-1596705351829-873b4d4b29c9?q=80&w=2070", // Lanterns
+        "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?q=80&w=2070", // Mosque Art
+        "https://images.unsplash.com/photo-1532372576445-021b3d538e4a?q=80&w=2070", // Aesthetic Food
+        "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=2070", // Architecture
+      ];
+
+      function setRandomBackground() {
+        const randomBg =
+          backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        document.body.style.backgroundImage = `url('${randomBg}')`;
+      }
+      setRandomBackground();
+
+      // --- 2. PRAYER TIMES & DATE API (Aladhan) ---
+      async function fetchPrayerTimes() {
+        const date = new Date();
+        const dateString = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        const url = `https://api.aladhan.com/v1/timingsByCity/${dateString}?city=${CITY}&country=${COUNTRY}&method=1`; // Method 1 is Univ of Islamic Sciences, Karachi (common for BD)
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          const timings = data.data.timings;
+          const hijri = data.data.date.hijri;
+
+          // Update Dates
+          document.getElementById("hijri-date").innerText =
+            `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+          document.getElementById("gregorian-date").innerText =
+            date.toDateString();
+
+          // Update Sehri/Iftar (Approximation: Sehri = Fajr, Iftar = Maghrib)
+          document.getElementById("sehri-time").innerText = timings.Fajr;
+          document.getElementById("iftar-time").innerText = timings.Maghrib;
+
+          // Calculate Countdown (Basic Logic)
+          updateCountdown(timings);
+        } catch (error) {
+          console.error("Error fetching prayer times:", error);
+        }
+      }
+
+      function updateCountdown(timings) {
+        // A simple logic to show next prayer would go here.
+        // For simplicity, let's just show current time for now or countdown to Iftar
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        document.getElementById("time-remaining").innerText = timeString;
+        document.getElementById("next-prayer-name").innerText = "Live Time";
+      }
+
+      setInterval(fetchPrayerTimes, 60000); // Update every minute
+      fetchPrayerTimes(); // Initial call
+      setInterval(() => {
+        // Just update the clock every second for smooth effect
+        document.getElementById("time-remaining").innerText =
+          new Date().toLocaleTimeString();
+      }, 1000);
+
+      // --- 3. RECIPE API (TheMealDB) ---
+      async function openRecipeModal() {
+        const modal = document.getElementById("recipe-modal");
+        modal.style.display = "flex";
+
+        // Show loading state
+        document.getElementById("modal-title").innerText =
+          "Finding a delicious recipe...";
+
+        try {
+          // Fetch a random meal
+          const res = await fetch(
+            "https://www.themealdb.com/api/json/v1/1/random.php",
+          );
+          const data = await res.json();
+          const meal = data.meals[0];
+
+          document.getElementById("modal-title").innerText = meal.strMeal;
+          document.getElementById("modal-cat").innerText =
+            `Category: ${meal.strCategory}`;
+          document.getElementById("modal-area").innerText =
+            `Cuisine: ${meal.strArea}`;
+          document.getElementById("modal-img").src = meal.strMealThumb;
+          document.getElementById("modal-link").href =
+            meal.strYoutube || meal.strSource;
+        } catch (error) {
+          document.getElementById("modal-title").innerText =
+            "Oops! Couldn't load recipe.";
+        }
+      }
+
+      function closeRecipeModal() {
+        document.getElementById("recipe-modal").style.display = "none";
+      }
+
+      // Close modal if clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("recipe-modal");
+        if (event.target == modal) {
+          closeRecipeModal();
+        }
+      };
+    </script>
   </body>
 </html>

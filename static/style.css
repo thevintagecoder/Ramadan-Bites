@@ -1,0 +1,83 @@
+:root {
+  --bg-color: #f7f3e8; /* Creamy background */
+  --card-bg: #ffffff; /* White card */
+  --primary-color: #6b8e23; /* Olive/Sage Green */
+  --text-color: #4a4a4a; /* Soft dark gray */
+  --accent-color: #d4a373; /* Soft Gold/Beige */
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+header h1 {
+  font-family: "Playfair Display", serif;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+header p {
+  color: var(--accent-color);
+  font-weight: 500;
+  margin-top: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(107, 142, 35, 0.1);
+  margin: 2rem 0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background-color: #556b2f;
+}
+
+footer {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}

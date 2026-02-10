@@ -48,7 +48,7 @@
     </div>
 
     <button class="start-btn" id="start-btn" onclick="openKitchen()">
-      ✨ Find Me A Recipe For Iftar ✨
+      ✨ Give Me A Recipe! ✨
     </button>
 
     <div class="counter-top" id="scene">
@@ -170,11 +170,23 @@
 
       async function fetchRecipe() {
         try {
+          // Changed to filter by Indian area
           const res = await fetch(
-            "https://www.themealdb.com/api/json/v1/1/random.php",
+            "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian",
           );
-          const data = await res.json();
-          const meal = data.meals[0];
+          const listData = await res.json();
+
+          // Pick a random Indian recipe from the list
+          const randomIndex = Math.floor(Math.random() * listData.meals.length);
+          const mealId = listData.meals[randomIndex].idMeal;
+
+          // Fetch full details for that specific meal
+          const detailRes = await fetch(
+            `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`,
+          );
+          const detailData = await detailRes.json();
+          const meal = detailData.meals[0];
+
           document.getElementById("r-title").innerText = meal.strMeal;
           document.getElementById("r-meta").innerText =
             `${meal.strArea} Cuisine • ${meal.strCategory}`;

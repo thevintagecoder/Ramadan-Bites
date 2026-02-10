@@ -3,182 +3,408 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ramadan Live</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <title>Ramadan Kitchen</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Patrick+Hand&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- 1. SET THE SCENE (Cozy Kitchen) --- */
+      body {
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* Stable Unsplash Image of a warm kitchen */
+        background: url("https://images.unsplash.com/photo-1556911220-e67041ee8420?q=80&w=2068&auto=format&fit=crop")
+          no-repeat center center fixed;
+        background-size: cover;
+        perspective: 1500px;
+      }
+
+      /* Vignette Overlay for focus */
+      body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.1) 0%,
+          rgba(0, 0, 0, 0.6) 90%
+        );
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* --- 2. START BUTTON --- */
+      .start-btn {
+        position: absolute;
+        top: 45%;
+        z-index: 100;
+        background: linear-gradient(135deg, #d4a373, #8b4513);
+        color: #fff;
+        border: 2px solid #fdf6e3;
+        padding: 18px 45px;
+        font-size: 1.6rem;
+        font-family: "Cinzel Decorative", cursive;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s ease;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      .start-btn:hover {
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #e3b584, #a0522d);
+      }
+
+      /* --- 3. THE COUNTERTOP (Flex Container) --- */
+      .counter-top {
+        display: flex;
+        flex-direction: row; /* Force side-by-side */
+        align-items: center; /* Center them vertically */
+        justify-content: center;
+        gap: 40px; /* Space between Book and iPad */
+        width: 90%;
+        max-width: 1200px;
+        height: 600px;
+        transform: translateY(120vh); /* Start hidden below */
+        transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* --- 4. THE 3D BOOK (Left) --- */
+      .book-stand {
+        width: 420px;
+        height: 520px;
+        position: relative;
+        perspective: 2000px;
+      }
+
+      .book {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s;
+      }
+
+      /* THE FLAP (Cover that moves) */
+      .cover-flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-origin: left; /* Hinge is on the left */
+        transform-style: preserve-3d;
+        transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 10;
+      }
+
+      /* When Open: Rotate the flap -180deg */
+      .book.open .cover-flap {
+        transform: rotateY(-180deg);
+      }
+
+      /* Front of the Cover (Leather + Title) */
+      .cover-front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #5d4037
+          url("https://www.transparenttextures.com/patterns/leather.png");
+        border-radius: 0 15px 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backface-visibility: hidden; /* HIDDEN when flipped! */
+        border: 5px solid #3e2723;
+        box-sizing: border-box;
+        box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.4);
+        color: gold;
+        text-align: center;
+      }
+
+      /* Back of the Cover (Inner Paper) */
+      .cover-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fdf6e3;
+        border-radius: 15px 0 0 15px;
+        transform: rotateY(180deg); /* Faces opposite way initially */
+        backface-visibility: hidden;
+        box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.1);
+        /* This is what you see on the LEFT when book is open */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* The Static Page (Right side, stays put) */
+      .pages-right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fdf6e3;
+        border-radius: 0 15px 15px 0;
+        z-index: 1; /* Behind the cover initially */
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(to right, #e0cda5, #fdf6e3 15%);
+      }
+
+      /* Typography */
+      .recipe-title {
+        font-family: "Cinzel Decorative";
+        color: #5d4037;
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+        border-bottom: 2px solid #d4a373;
+      }
+      .recipe-meta {
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        color: #888;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+      }
+      .recipe-text {
+        font-family: "Patrick Hand", cursive;
+        font-size: 1.2rem;
+        line-height: 1.4;
+        color: #2d2d2d;
+        overflow-y: auto;
+        height: 320px;
+      }
+
+      /* --- 5. THE IPAD (Right) --- */
+      .ipad-stand {
+        width: 480px;
+        height: 360px;
+        background: #222;
+        border-radius: 24px;
+        padding: 12px;
+        box-shadow:
+          0 0 0 1px #444,
+          /* Edge definition */ 0 20px 50px rgba(0, 0, 0, 0.7); /* Deep shadow */
+        display: flex;
+        flex-direction: column;
+        transform: rotateY(-10deg); /* Slight angle towards user */
+        transition: transform 0.3s;
+      }
+
+      .ipad-stand:hover {
+        transform: rotateY(0deg) scale(1.02);
+      }
+
+      .ipad-screen {
+        width: 100%;
+        height: 100%;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .fallback-msg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+      }
+
+      .yt-btn {
+        margin-top: 15px;
+        background: #c4302b;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <div class="glass-card">
-        <h1 class="arabic-date" id="hijri-date">Loading...</h1>
-        <p class="english-date" id="gregorian-date">...</p>
+    <button class="start-btn" id="start-btn" onclick="openKitchen()">
+      ✨ Prepare Iftar ✨
+    </button>
 
-        <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 20px 0" />
+    <div class="counter-top" id="scene">
+      <div class="book-stand">
+        <div class="book" id="the-book">
+          <div class="cover-flap">
+            <div class="cover-front">
+              <div>
+                <h1
+                  style="
+                    font-size: 2.8rem;
+                    margin: 0;
+                    text-shadow: 2px 2px 0px #3e2723;
+                  "
+                >
+                  Ramadan<br />Secrets
+                </h1>
+                <p style="margin: 5px 0; color: #e3b584">Tap button to open</p>
+              </div>
+            </div>
+            <div class="cover-back">
+              <div style="text-align: center; opacity: 0.6">
+                <h3
+                  style="
+                    font-family: &quot;Cinzel Decorative&quot;;
+                    color: #5d4037;
+                  "
+                >
+                  Notes
+                </h3>
+                <p style="font-family: &quot;Patrick Hand&quot;">
+                  Made with love.
+                </p>
+              </div>
+            </div>
+          </div>
 
-        <div id="prayer-info">
-          <p
-            style="
-              text-transform: uppercase;
-              letter-spacing: 2px;
-              font-size: 0.8rem;
-            "
-          >
-            Next Prayer
-          </p>
-          <div class="timer-box">
-            <h2 id="time-remaining">--:--:--</h2>
-            <p id="next-prayer-name">Loading...</p>
+          <div class="pages-right">
+            <h2 class="recipe-title" id="r-title">...</h2>
+            <p class="recipe-meta" id="r-meta">...</p>
+            <div class="recipe-text" id="r-desc">
+              Summoning deliciousness...
+            </div>
+            <p
+              style="
+                text-align: center;
+                margin-top: auto;
+                font-family: &quot;Cinzel Decorative&quot;;
+                color: #5d4037;
+                font-size: 1.2rem;
+              "
+            >
+              ~ Bismillah ~
+            </p>
           </div>
         </div>
+      </div>
 
+      <div class="ipad-stand">
+        <div class="ipad-screen">
+          <iframe
+            id="ipad-video"
+            src=""
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          ></iframe>
+
+          <div id="video-error" class="fallback-msg">
+            <p>Video embedding disabled by owner.</p>
+            <a id="yt-link" href="#" target="_blank" class="yt-btn"
+              >Watch on YouTube</a
+            >
+          </div>
+        </div>
         <div
           style="
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
+            width: 100px;
+            height: 4px;
+            background: #555;
+            border-radius: 2px;
+            align-self: center;
+            margin-top: 8px;
           "
-        >
-          <div>
-            <span>🌅 Sehri:</span> <strong id="sehri-time">--:--</strong>
-          </div>
-          <div>
-            <span>🌇 Iftar:</span> <strong id="iftar-time">--:--</strong>
-          </div>
-        </div>
-
-        <button class="btn" onclick="openRecipeModal()">
-          ✨ Get Iftar Idea
-        </button>
-      </div>
-    </div>
-
-    <div id="recipe-modal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeRecipeModal()">&times;</span>
-        <img id="modal-img" class="modal-img" src="" alt="Food" />
-        <h2 id="modal-title">Searching...</h2>
-        <p id="modal-cat" style="color: #666; font-size: 0.9rem"></p>
-        <p
-          id="modal-area"
-          style="color: #888; font-size: 0.8rem; margin-bottom: 10px"
-        ></p>
-        <a
-          id="modal-link"
-          href="#"
-          target="_blank"
-          style="color: #d4a373; text-decoration: none; font-weight: bold"
-          >View Full Recipe →</a
-        >
+        ></div>
       </div>
     </div>
 
     <script>
-      // --- CONFIGURATION ---
-      const CITY = "Dhaka";
-      const COUNTRY = "Bangladesh";
+      async function openKitchen() {
+        // 1. Hide Button
+        const btn = document.getElementById("start-btn");
+        btn.style.opacity = "0";
+        setTimeout(() => (btn.style.display = "none"), 400);
 
-      // --- 1. DYNAMIC BACKGROUNDS ---
-      const backgrounds = [
-        "https://images.unsplash.com/photo-1596705351829-873b4d4b29c9?q=80&w=2070", // Lanterns
-        "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?q=80&w=2070", // Mosque Art
-        "https://images.unsplash.com/photo-1532372576445-021b3d538e4a?q=80&w=2070", // Aesthetic Food
-        "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=2070", // Architecture
-      ];
+        // 2. Fetch Data
+        await fetchRecipe();
 
-      function setRandomBackground() {
-        const randomBg =
-          backgrounds[Math.floor(Math.random() * backgrounds.length)];
-        document.body.style.backgroundImage = `url('${randomBg}')`;
+        // 3. Slide up the counter
+        const scene = document.getElementById("scene");
+        scene.style.transform = "translateY(0)"; // Moves to center
+
+        // 4. Open Book after slide up
+        setTimeout(() => {
+          document.getElementById("the-book").classList.add("open");
+        }, 1000);
       }
-      setRandomBackground();
 
-      // --- 2. PRAYER TIMES & DATE API (Aladhan) ---
-      async function fetchPrayerTimes() {
-        const date = new Date();
-        const dateString = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-        const url = `https://api.aladhan.com/v1/timingsByCity/${dateString}?city=${CITY}&country=${COUNTRY}&method=1`; // Method 1 is Univ of Islamic Sciences, Karachi (common for BD)
-
+      async function fetchRecipe() {
         try {
-          const response = await fetch(url);
-          const data = await response.json();
-          const timings = data.data.timings;
-          const hijri = data.data.date.hijri;
-
-          // Update Dates
-          document.getElementById("hijri-date").innerText =
-            `${hijri.day} ${hijri.month.en} ${hijri.year}`;
-          document.getElementById("gregorian-date").innerText =
-            date.toDateString();
-
-          // Update Sehri/Iftar (Approximation: Sehri = Fajr, Iftar = Maghrib)
-          document.getElementById("sehri-time").innerText = timings.Fajr;
-          document.getElementById("iftar-time").innerText = timings.Maghrib;
-
-          // Calculate Countdown (Basic Logic)
-          updateCountdown(timings);
-        } catch (error) {
-          console.error("Error fetching prayer times:", error);
-        }
-      }
-
-      function updateCountdown(timings) {
-        // A simple logic to show next prayer would go here.
-        // For simplicity, let's just show current time for now or countdown to Iftar
-        const now = new Date();
-        const timeString = now.toLocaleTimeString();
-        document.getElementById("time-remaining").innerText = timeString;
-        document.getElementById("next-prayer-name").innerText = "Live Time";
-      }
-
-      setInterval(fetchPrayerTimes, 60000); // Update every minute
-      fetchPrayerTimes(); // Initial call
-      setInterval(() => {
-        // Just update the clock every second for smooth effect
-        document.getElementById("time-remaining").innerText =
-          new Date().toLocaleTimeString();
-      }, 1000);
-
-      // --- 3. RECIPE API (TheMealDB) ---
-      async function openRecipeModal() {
-        const modal = document.getElementById("recipe-modal");
-        modal.style.display = "flex";
-
-        // Show loading state
-        document.getElementById("modal-title").innerText =
-          "Finding a delicious recipe...";
-
-        try {
-          // Fetch a random meal
           const res = await fetch(
             "https://www.themealdb.com/api/json/v1/1/random.php",
           );
           const data = await res.json();
           const meal = data.meals[0];
 
-          document.getElementById("modal-title").innerText = meal.strMeal;
-          document.getElementById("modal-cat").innerText =
-            `Category: ${meal.strCategory}`;
-          document.getElementById("modal-area").innerText =
-            `Cuisine: ${meal.strArea}`;
-          document.getElementById("modal-img").src = meal.strMealThumb;
-          document.getElementById("modal-link").href =
-            meal.strYoutube || meal.strSource;
-        } catch (error) {
-          document.getElementById("modal-title").innerText =
-            "Oops! Couldn't load recipe.";
+          // Populate Book
+          document.getElementById("r-title").innerText = meal.strMeal;
+          document.getElementById("r-meta").innerText =
+            `${meal.strArea} Cuisine • ${meal.strCategory}`;
+          document.getElementById("r-desc").innerText = meal.strInstructions;
+
+          // Populate iPad
+          const videoError = document.getElementById("video-error");
+          const iframe = document.getElementById("ipad-video");
+
+          if (meal.strYoutube) {
+            const videoId = meal.strYoutube.split("v=")[1];
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&origin=${window.location.origin}`;
+
+            iframe.src = embedUrl;
+            iframe.style.display = "block";
+            videoError.style.display = "none";
+
+            document.getElementById("yt-link").href = meal.strYoutube;
+          } else {
+            iframe.style.display = "none";
+            videoError.style.display = "flex";
+            videoError.querySelector("p").innerText =
+              "No video available for this recipe.";
+          }
+        } catch (e) {
+          console.error(e);
+          alert("The kitchen is closed (Network Error). Try refreshing!");
         }
       }
-
-      function closeRecipeModal() {
-        document.getElementById("recipe-modal").style.display = "none";
-      }
-
-      // Close modal if clicking outside
-      window.onclick = function (event) {
-        const modal = document.getElementById("recipe-modal");
-        if (event.target == modal) {
-          closeRecipeModal();
-        }
-      };
     </script>
   </body>
 </html>

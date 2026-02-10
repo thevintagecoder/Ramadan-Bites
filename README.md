@@ -1,4 +1,4 @@
-# 🌙 Ramadan Kitchen
+# 🌙 Ramadan Bites
 
 An interactive, aesthetically pleasing web experience designed to bring the spirit of Ramadan to your screen. This project features a virtual kitchen scene that suggests random **Indian and Bengali Iftar recipes** complete with cooking instructions and video tutorials.
 
@@ -49,7 +49,7 @@ Run the Server
 View the App
 Open your browser and go to: http://127.0.0.1:8000
 
-🎨 Credits
+Credits
 Created by: Nafisa Mehzabin
 
 Fonts: Google Fonts (Reem Kufi, Cinzel Decorative, Patrick Hand, Amiri)
